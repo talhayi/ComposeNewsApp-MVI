@@ -2,14 +2,23 @@ package com.example.composenewsapp.data.di
 
 import android.app.Application
 import com.example.composenewsapp.data.manager.LocalUserManagerImpl
+import com.example.composenewsapp.data.remote.NewsApi
+import com.example.composenewsapp.data.repository.NewsRepositoryImpl
 import com.example.composenewsapp.domain.manager.LocalUserManager
+import com.example.composenewsapp.domain.repository.NewsRepository
 import com.example.composenewsapp.domain.usecases.app_entry.AppEntryUseCase
 import com.example.composenewsapp.domain.usecases.app_entry.ReadAppEntryUseCase
 import com.example.composenewsapp.domain.usecases.app_entry.SaveAppEntryUseCase
+import com.example.composenewsapp.domain.usecases.news.GetNews
+import com.example.composenewsapp.domain.usecases.news.NewsUseCases
+import com.example.composenewsapp.domain.usecases.news.SearchNews
+import com.example.composenewsapp.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -30,4 +39,31 @@ object AppModule {
         readAppEntryUseCase = ReadAppEntryUseCase(localUserManger),
         saveAppEntryUseCase = SaveAppEntryUseCase(localUserManger)
     )
+
+    @Provides
+    @Singleton
+    fun provideNewsApi(): NewsApi {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NewsApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsRepository(
+        newsApi: NewsApi
+    ): NewsRepository = NewsRepositoryImpl(newsApi)
+
+    @Provides
+    @Singleton
+    fun provideNewsUseCase(
+        newsRepository: NewsRepository
+    ): NewsUseCases {
+        return NewsUseCases(
+            getNews = GetNews(newsRepository),
+            searchNews = SearchNews(newsRepository)
+        )
+    }
 }

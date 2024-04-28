@@ -19,12 +19,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.composenewsapp.presentation.Dimens.MediumPadding2
 import com.example.composenewsapp.presentation.common.NewsButton
 import com.example.composenewsapp.presentation.common.NewsTextButton
-import com.example.composenewsapp.presentation.components.OnBoardingPage
-import com.example.composenewsapp.presentation.components.PagerIndicator
+import com.example.composenewsapp.presentation.onboarding.components.OnBoardingPage
+import com.example.composenewsapp.presentation.onboarding.components.PagerIndicator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
