@@ -76,7 +76,6 @@ fun OnBoardingScreen(
                                     page = pagerState.currentPage - 1
                                 )
                             }
-
                         }
                     )
                 }
