@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composenewsapp.domain.model.Article
 import com.example.composenewsapp.domain.usecases.news.NewsUseCases
+import com.example.composenewsapp.util.UIComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +17,7 @@ class DetailViewModel @Inject constructor(
     private val newsUseCases: NewsUseCases
 ): ViewModel()  {
 
-    var sideEffect by mutableStateOf<String?>(null)
+    var sideEffect by mutableStateOf<UIComponent?>(null)
         private set
 
     fun onEvent(event: DetailEvent) {
@@ -39,11 +40,11 @@ class DetailViewModel @Inject constructor(
 
     private suspend fun deleteArticle(article: Article) {
         newsUseCases.deleteArticleUseCase(article = article)
-        sideEffect = "Article deleted"
+        sideEffect = UIComponent.Toast("Article deleted")
     }
 
     private suspend fun upsertArticle(article: Article) {
         newsUseCases.upsertArticleUseCase(article = article)
-        sideEffect = "Article Inserted"
+        sideEffect = UIComponent.Toast("Article inserted")
     }
 }

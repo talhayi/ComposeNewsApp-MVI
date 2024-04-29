@@ -23,13 +23,14 @@ import com.example.composenewsapp.domain.model.Article
 import com.example.composenewsapp.presentation.Dimens.MediumPadding1
 import com.example.composenewsapp.presentation.common.ArticlesList
 import com.example.composenewsapp.presentation.common.SearchBar
-import com.example.composenewsapp.presentation.navgraph.Route
 
+@Suppress("UNUSED_EXPRESSION")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     articles: LazyPagingItems<Article>,
-    navigate:(String) -> Unit
+    navigateToSearch: () -> Unit,
+    navigateToDetail: (Article) -> Unit
 ) {
 
     val titles by remember {
@@ -71,7 +72,7 @@ fun HomeScreen(
             onValueChange = {},
             onSearch = {},
             onClick = {
-                navigate(Route.SearchScreen.route)
+                navigateToSearch
             }
         )
 
@@ -90,8 +91,8 @@ fun HomeScreen(
         ArticlesList(
             modifier = Modifier.padding(horizontal = MediumPadding1),
             articles = articles,
-            onClick = {
-                navigate(Route.DetailScreen.route)
+            onClick = {article->
+                navigateToDetail(article)
             }
         )
     }

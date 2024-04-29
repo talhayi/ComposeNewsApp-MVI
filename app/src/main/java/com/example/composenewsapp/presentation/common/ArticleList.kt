@@ -29,8 +29,9 @@ fun ArticlesList(
             items(
                 count = articles.size,
             ) {
-                val article = articles[it]
-                    ArticleCard(article = article, onClick = {onClick(article)})
+                articles[it]?.let { article ->
+                    ArticleCard(article = article, onClick = { onClick(article) })
+                }
 
             }
         }
