@@ -10,7 +10,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val newsUseCase: NewsUseCases
 ): ViewModel() {
-    val news = newsUseCase.getNews(
+    val news = newsUseCase.getNewsUseCase(
         sources = listOf("bbc-news","abc-news","al-jazeera-english")
     ).cachedIn(viewModelScope)
 }

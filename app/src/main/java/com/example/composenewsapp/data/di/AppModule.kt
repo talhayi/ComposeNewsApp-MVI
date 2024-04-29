@@ -13,9 +13,13 @@ import com.example.composenewsapp.domain.repository.NewsRepository
 import com.example.composenewsapp.domain.usecases.app_entry.AppEntryUseCase
 import com.example.composenewsapp.domain.usecases.app_entry.ReadAppEntryUseCase
 import com.example.composenewsapp.domain.usecases.app_entry.SaveAppEntryUseCase
-import com.example.composenewsapp.domain.usecases.news.GetNews
+import com.example.composenewsapp.domain.usecases.news.DeleteArticleUseCase
+import com.example.composenewsapp.domain.usecases.news.GetArticleUseCase
+import com.example.composenewsapp.domain.usecases.news.GetArticlesUseCase
+import com.example.composenewsapp.domain.usecases.news.GetNewsUseCase
 import com.example.composenewsapp.domain.usecases.news.NewsUseCases
-import com.example.composenewsapp.domain.usecases.news.SearchNews
+import com.example.composenewsapp.domain.usecases.news.SearchNewsUseCase
+import com.example.composenewsapp.domain.usecases.news.UpsertArticleUseCase
 import com.example.composenewsapp.util.Constants.BASE_URL
 import com.example.composenewsapp.util.Constants.NEWS_DATABASE_NAME
 import dagger.Module
@@ -68,8 +72,12 @@ object AppModule {
         newsRepository: NewsRepository
     ): NewsUseCases {
         return NewsUseCases(
-            getNews = GetNews(newsRepository),
-            searchNews = SearchNews(newsRepository)
+            getNewsUseCase = GetNewsUseCase(newsRepository),
+            searchNewsUseCase = SearchNewsUseCase(newsRepository),
+            deleteArticleUseCase = DeleteArticleUseCase(newsRepository),
+            getArticlesUseCase = GetArticlesUseCase(newsRepository),
+            getArticleUseCase = GetArticleUseCase(newsRepository),
+            upsertArticleUseCase = UpsertArticleUseCase(newsRepository)
         )
     }
 
